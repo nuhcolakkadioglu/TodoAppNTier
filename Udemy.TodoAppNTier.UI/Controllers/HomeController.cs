@@ -20,6 +20,7 @@ namespace Udemy.TodoAppNTier.UI.Controllers
         //BBB
         public async Task<IActionResult> Index()
         {
+            //deneme
             var workList = await _workService.GetAll();
             return View(workList);
         }
