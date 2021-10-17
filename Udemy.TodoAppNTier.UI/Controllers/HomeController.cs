@@ -10,37 +10,36 @@ namespace Udemy.TodoAppNTier.UI.Controllers
 {
     public class HomeController : Controller
     {
-    ////AAA
         private readonly IWorkService _workService;
 
         public HomeController(IWorkService workService)
         {
             _workService = workService;
         }
-        //deneme
+        
         public async Task<IActionResult> Index()
         {
-            //deneme
+    
             var workList = await _workService.GetAll();
             return View(workList);
         }
-        //pofff
+ 
         public IActionResult Create()
         {
-            //bende buraya  yorum koydummm
+     
             return View(new WorkCreateDto());
         }
         [HttpPost]
         public async Task<IActionResult> Create(WorkCreateDto model)
         {
-        //yorumlaaa
+
             if (ModelState.IsValid)
             {
                 await _workService.Create(model);
 
                 return RedirectToAction("Index");
             }
-            //Ok
+         
             return View(model);
         }
     }
