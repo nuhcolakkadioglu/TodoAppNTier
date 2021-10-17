@@ -17,7 +17,7 @@ namespace Udemy.TodoAppNTier.UI.Controllers
         {
             _workService = workService;
         }
-        //BBB
+        //deneme
         public async Task<IActionResult> Index()
         {
             var workList = await _workService.GetAll();
