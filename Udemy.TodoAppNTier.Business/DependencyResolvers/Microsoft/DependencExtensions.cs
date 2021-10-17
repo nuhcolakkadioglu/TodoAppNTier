@@ -19,6 +19,8 @@ namespace Udemy.TodoAppNTier.Business.DependencyResolvers.Microsoft
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IWorkService, WorkService>();
 
+            
+
             services.AddDbContext<TodoContext>(opt =>
             {
                 opt.UseSqlServer(@"server=(localdb)\MSSQLLocalDB; database=TodoAppNTier; integrated security=true");
