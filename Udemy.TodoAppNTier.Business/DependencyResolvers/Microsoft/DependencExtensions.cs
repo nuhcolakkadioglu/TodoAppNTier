@@ -8,6 +8,7 @@ using Udemy.TodoAppNTier.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Udemy.TodoAppNTier.DataAccess.UnitOfWork;
 using Udemy.TodoAppNTier.Business.Interfaces;
+using Udemy.TodoAppNTier.Business.Services;
 
 namespace Udemy.TodoAppNTier.Business.DependencyResolvers.Microsoft
 {
@@ -16,7 +17,7 @@ namespace Udemy.TodoAppNTier.Business.DependencyResolvers.Microsoft
         public static void AddDependencies(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IWorkService, IWorkService>();
+            services.AddScoped<IWorkService, WorkService>();
 
             services.AddDbContext<TodoContext>(opt =>
             {
