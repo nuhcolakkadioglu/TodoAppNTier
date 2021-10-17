@@ -24,6 +24,7 @@ namespace Udemy.TodoAppNTier.UI.Controllers
             var workList = await _workService.GetAll();
             return View(workList);
         }
+        //pofff
         public IActionResult Create()
         {
             //bende buraya  yorum koydummm
