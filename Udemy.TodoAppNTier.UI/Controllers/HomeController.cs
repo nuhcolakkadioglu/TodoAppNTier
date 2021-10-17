@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Udemy.TodoAppNTier.Business.Interfaces;
+using Udemy.TodoAppNTier.Dtos.WorkDtos;
 
 namespace Udemy.TodoAppNTier.UI.Controllers
 {
@@ -18,8 +19,23 @@ namespace Udemy.TodoAppNTier.UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-           var workList = await _workService.GetAll();
-            return  View(workList);
+            var workList = await _workService.GetAll();
+            return View(workList);
+        }
+        public IActionResult Create()
+        {
+            return View(new WorkCreateDto());
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(WorkCreateDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _workService.Create(model);
+
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
     }
 }
