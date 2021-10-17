@@ -15,5 +15,6 @@ namespace Udemy.TodoAppNTier.Business.Interfaces
         Task<WorkListDto> GetById(int id);
         Task Remove(object id);
 
+        Task Update(WorkUpdateDto model);
     }
 }

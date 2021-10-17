@@ -65,5 +65,17 @@ namespace Udemy.TodoAppNTier.Business.Services
             var work = await _unitOfWork.GetRepository<Work>().GetByIdAsync(id);
             _unitOfWork.GetRepository<Work>().RemoveAsync(work);
         }
+
+        public async Task Update(WorkUpdateDto model)
+        {
+             _unitOfWork.GetRepository<Work>().UpdateAsync(new()
+            {
+                Definition = model.Definition,
+                Id = model.Id,
+                IsCompleted = model.IsCompleted
+            });
+
+            await _unitOfWork.SaveChangesAsync();
+        }
     }
 }
