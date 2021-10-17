@@ -1,4 +1,5 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
+﻿@model List<WorkListDto>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head lang="tr">
     <title>Todo App</title>
     <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
@@ -7,12 +8,21 @@
 <body>
     <div class="container my-2">
         <p class="text-danger">Test</p>
-        <table class="">
+        <table class="table table-striped table-bordered table-sm">
             <thead>
-
+                <tr>
+                    <th>İş</th>
+                    <th>Durumu</th>
+                </tr>
             </thead>
             <tbody>
-
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Definition</td>
+                        <td>@(item.IsCompleted ? "Tamamlandı" : "Tamamlanmadı")</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
