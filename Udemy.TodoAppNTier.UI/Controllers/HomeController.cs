@@ -24,6 +24,7 @@ namespace Udemy.TodoAppNTier.UI.Controllers
         }
         public IActionResult Create()
         {
+            //bende buraya  yorum koydummm
             return View(new WorkCreateDto());
         }
         [HttpPost]
