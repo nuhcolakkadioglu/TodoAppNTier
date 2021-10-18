@@ -51,7 +51,7 @@ namespace Udemy.TodoAppNTier.Business.Services
 
         public async Task<WorkListDto> GetById(int id)
         {
-            var work = await _unitOfWork.GetRepository<Work>().GetByIdAsync(id);
+            var work = await _unitOfWork.GetRepository<Work>() .GetByFilter(m=>m.Id== id);
             return new WorkListDto
             {
                 Definition = work.Definition,

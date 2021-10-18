@@ -42,5 +42,27 @@ namespace Udemy.TodoAppNTier.UI.Controllers
          
             return View(model);
         }
+
+        public async Task<IActionResult> Update(int id)
+        {
+          var work=  await _workService.GetById(id);
+
+            return View(new WorkUpdateDto { 
+            Definition = work.Definition,
+            Id = work.Id,
+            IsCompleted= work.IsCompleted
+            });
+        }
+        [HttpPost]
+        public IActionResult Update(WorkUpdateDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _workService.Update(model);
+                return RedirectToAction("Index");
+            }
+
+           return View(model);
+        }
     }
 }
