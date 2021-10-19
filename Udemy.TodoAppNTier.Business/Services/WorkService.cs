@@ -60,10 +60,10 @@ namespace Udemy.TodoAppNTier.Business.Services
             };
         }
 
-        public async Task Remove(object id)
+        public async Task Remove(int id)
         {
-            var work = await _unitOfWork.GetRepository<Work>().GetByIdAsync(id);
-            _unitOfWork.GetRepository<Work>().RemoveAsync(work);
+            _unitOfWork.GetRepository<Work>().RemoveAsync(id);
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task Update(WorkUpdateDto model)

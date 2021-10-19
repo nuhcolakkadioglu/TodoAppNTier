@@ -64,5 +64,12 @@ namespace Udemy.TodoAppNTier.UI.Controllers
 
            return View(model);
         }
+
+        public async Task<IActionResult> Remove(int id)
+        {
+          await  _workService.Remove(id);
+            return RedirectToAction("index");
+        }
+
     }
 }

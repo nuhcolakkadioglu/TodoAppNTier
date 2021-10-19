@@ -24,7 +24,11 @@
                     <tr>
                         <td>@item.Definition</td>
                         <td>@(item.IsCompleted ? "Tamamlandı" : "Tamamlanmadı")</td>
-                        <td><a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning btn-sm" >Güncelle</a></td>
+                        <td>
+                            <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Güncelle</a>
+                            <a asp-action="Remove" asp-route-id="@item.Id" class="btn btn-danger btn-sm">sil</a>
+
+                        </td>
                     </tr>
                 }
             </tbody>

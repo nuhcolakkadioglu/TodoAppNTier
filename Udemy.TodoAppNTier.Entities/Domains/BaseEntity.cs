@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Udemy.TodoAppNTier.Entities.Domains
 {
-    public class Work : BaseEntity
+    public class BaseEntity
     {
-
-
-        public string Definition { get; set; }
-
-        public bool IsCompleted { get; set; }
+        public int Id { get; set; }
     }
 }

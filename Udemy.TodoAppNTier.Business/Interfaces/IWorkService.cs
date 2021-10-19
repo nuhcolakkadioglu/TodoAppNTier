@@ -13,7 +13,7 @@ namespace Udemy.TodoAppNTier.Business.Interfaces
         Task Create(WorkCreateDto model);
 
         Task<WorkListDto> GetById(int id);
-        Task Remove(object id);
+        Task Remove(int id);
 
         Task Update(WorkUpdateDto model);
     }
