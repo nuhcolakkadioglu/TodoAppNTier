@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Udemy.TodoAppNTier.Business.Interfaces;
+using Udemy.TodoAppNTier.Business.ValidationRules;
 using Udemy.TodoAppNTier.DataAccess.UnitOfWork;
 using Udemy.TodoAppNTier.Dtos.Interfaces;
 using Udemy.TodoAppNTier.Dtos.WorkDtos;
@@ -24,23 +25,30 @@ namespace Udemy.TodoAppNTier.Business.Services
 
         public async Task Create(WorkCreateDto model)
         {
-            await _unitOfWork.GetRepository<Work>().CreateAsync(_mapper.Map<Work>(model));     
 
-            await _unitOfWork.SaveChangesAsync();
+            var valid = new WorkCreateDtoValidator();
+            var validationResult = valid.Validate(model);
+            if (validationResult.IsValid)
+            {
+                await _unitOfWork.GetRepository<Work>().CreateAsync(_mapper.Map<Work>(model));
+
+                await _unitOfWork.SaveChangesAsync();
+            }
+        
         }
 
         public async Task<List<WorkListDto>> GetAll()
         {
             var list = await _unitOfWork.GetRepository<Work>().GetAllAsync();
-           
 
-           
+
+
             return _mapper.Map<List<WorkListDto>>(list);
         }
 
         public async Task<IDto> GetById<IDto>(int id)
         {
-            var work = await _unitOfWork.GetRepository<Work>() .GetByFilter(m=>m.Id== id);
+            var work = await _unitOfWork.GetRepository<Work>().GetByFilter(m => m.Id == id);
             return _mapper.Map<IDto>(work);
         }
 

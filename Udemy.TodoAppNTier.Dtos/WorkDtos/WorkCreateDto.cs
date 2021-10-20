@@ -10,7 +10,7 @@ namespace Udemy.TodoAppNTier.Dtos.WorkDtos
 {
     public class WorkCreateDto : IDto
     {
-        [Required(ErrorMessage ="bu alan boş geçilemez ")]
+       // [Required(ErrorMessage ="bu alan boş geçilemez ")]
         public string Definition { get; set; }
 
         public bool IsCompleted { get; set; }
