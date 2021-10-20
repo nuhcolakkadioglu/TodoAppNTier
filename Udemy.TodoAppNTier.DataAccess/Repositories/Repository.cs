@@ -50,6 +50,7 @@ namespace Udemy.TodoAppNTier.DataAccess.Repositories
             var deletedEntity = _context.Set<T>().Find(id);
 
              _context.Set<T>().Remove(deletedEntity);
+            
         }
 
         public void UpdateAsync(T entity)

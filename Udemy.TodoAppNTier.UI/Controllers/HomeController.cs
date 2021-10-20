@@ -45,13 +45,9 @@ namespace Udemy.TodoAppNTier.UI.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-          var work=  await _workService.GetById(id);
+          var work=  await _workService.GetById<WorkUpdateDto>(id);
 
-            return View(new WorkUpdateDto { 
-            Definition = work.Definition,
-            Id = work.Id,
-            IsCompleted= work.IsCompleted
-            });
+            return View(work);
         }
         [HttpPost]
         public IActionResult Update(WorkUpdateDto model)
