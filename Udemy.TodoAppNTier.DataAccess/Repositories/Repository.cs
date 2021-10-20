@@ -35,7 +35,7 @@ namespace Udemy.TodoAppNTier.DataAccess.Repositories
             return asNoTracking ? await _context.Set<T>().FirstOrDefaultAsync(filter) : await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(filter);
         }
 
-        public async Task<T> GetByIdAsync(object id)
+        public async Task<T> Find(object id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
@@ -45,19 +45,17 @@ namespace Udemy.TodoAppNTier.DataAccess.Repositories
             return _context.Set<T>().AsQueryable();
         }
 
-        public  void RemoveAsync(int id)
+        public  void RemoveAsync(T entity)
         {
-            var deletedEntity = _context.Set<T>().Find(id);
-
-             _context.Set<T>().Remove(deletedEntity);
+    
+             _context.Set<T>().Remove(entity);
             
         }
 
-        public void UpdateAsync(T entity)
+        public void UpdateAsync(T entity,T uncanged)
         {
 
-            var updatedEntity = _context.Set<T>().Find(entity.Id);
-            _context.Entry(updatedEntity).CurrentValues.SetValues(entity);
+            _context.Entry(uncanged).CurrentValues.SetValues(entity);
 
             //_context.Set<T>().Update(entity);
         }

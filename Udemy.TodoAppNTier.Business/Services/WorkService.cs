@@ -58,8 +58,13 @@ namespace Udemy.TodoAppNTier.Business.Services
 
         public async Task Remove(int id)
         {
-            _unitOfWork.GetRepository<Work>().RemoveAsync(id);
-            await _unitOfWork.SaveChangesAsync();
+            var deleted = await _unitOfWork.GetRepository<Work>().GetByFilter(m => m.Id == id);
+            if (deleted != null)
+            {
+                _unitOfWork.GetRepository<Work>().RemoveAsync(deleted);
+                await _unitOfWork.SaveChangesAsync();
+
+            }
         }
 
         public async Task Update(WorkUpdateDto model)
@@ -67,8 +72,13 @@ namespace Udemy.TodoAppNTier.Business.Services
             var valid = _updateValidator.Validate(model);
             if (valid.IsValid)
             {
-                _unitOfWork.GetRepository<Work>().UpdateAsync(_mapper.Map<Work>(model));
-                await _unitOfWork.SaveChangesAsync();
+                var updatedEntity =await _unitOfWork.GetRepository<Work>().Find(model.Id);
+                if (updatedEntity != null)
+                {
+                    _unitOfWork.GetRepository<Work>().UpdateAsync(_mapper.Map<Work>(model),updatedEntity);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            
             }
         }
     }
