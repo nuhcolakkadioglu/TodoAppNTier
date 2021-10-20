@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,24 +18,27 @@ namespace Udemy.TodoAppNTier.Business.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public WorkService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IValidator<WorkCreateDto> _createValidator;
+        private readonly IValidator<WorkUpdateDto> _updateValidator;
+        public WorkService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<WorkCreateDto> createValidator, IValidator<WorkUpdateDto> updateValidator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         public async Task Create(WorkCreateDto model)
         {
 
-            var valid = new WorkCreateDtoValidator();
-            var validationResult = valid.Validate(model);
+            var validationResult = _createValidator.Validate(model);
             if (validationResult.IsValid)
             {
                 await _unitOfWork.GetRepository<Work>().CreateAsync(_mapper.Map<Work>(model));
 
                 await _unitOfWork.SaveChangesAsync();
             }
-        
+
         }
 
         public async Task<List<WorkListDto>> GetAll()
@@ -60,8 +64,12 @@ namespace Udemy.TodoAppNTier.Business.Services
 
         public async Task Update(WorkUpdateDto model)
         {
-            _unitOfWork.GetRepository<Work>().UpdateAsync(_mapper.Map<Work>(model));
-            await _unitOfWork.SaveChangesAsync();
+            var valid = _updateValidator.Validate(model);
+            if (valid.IsValid)
+            {
+                _unitOfWork.GetRepository<Work>().UpdateAsync(_mapper.Map<Work>(model));
+                await _unitOfWork.SaveChangesAsync();
+            }
         }
     }
 }
