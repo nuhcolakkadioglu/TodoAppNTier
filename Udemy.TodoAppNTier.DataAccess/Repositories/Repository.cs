@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Udemy.TodoAppNTier.DataAccess.Contexts;
 using Udemy.TodoAppNTier.DataAccess.Interfaces;
+using Udemy.TodoAppNTier.Entities.Domains;
 
 namespace Udemy.TodoAppNTier.DataAccess.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class, new()
+    public class Repository<T> : IRepository<T> where T : BaseEntity, new()
     {
         private readonly TodoContext _context;
 
@@ -34,7 +35,7 @@ namespace Udemy.TodoAppNTier.DataAccess.Repositories
             return asNoTracking ? await _context.Set<T>().FirstOrDefaultAsync(filter) : await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(filter);
         }
 
-        public async Task<T> GetByIdAsync(object id)
+        public async Task<T> Find(object id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
@@ -46,12 +47,17 @@ namespace Udemy.TodoAppNTier.DataAccess.Repositories
 
         public  void RemoveAsync(T entity)
         {
+    
              _context.Set<T>().Remove(entity);
+            
         }
 
-        public void UpdateAsync(T entity)
+        public void UpdateAsync(T entity,T uncanged)
         {
-            _context.Set<T>().Update(entity);
+
+            _context.Entry(uncanged).CurrentValues.SetValues(entity);
+
+            //_context.Set<T>().Update(entity);
         }
     }
 }
